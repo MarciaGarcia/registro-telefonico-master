@@ -1,0 +1,18 @@
+﻿<script type="text/javascript">
+    function imprimir() {
+        //desfazer as funcionalidades da dataTable
+        var dt = $('#tblDados').dataTable();
+        dt.fnDestroy();
+
+        //esconder as barras laterais e menu superior
+        $("[data-toggle='offcanvas']").click();
+        $("header").hide();
+        $("#boxBtnCadastro").hide();
+        $("#btnImprimir").hide();
+        $("#btnVoltar").toggleClass("invisible");
+
+    };
+    function voltar() {
+        document.location.reload();
+    };
+</script>

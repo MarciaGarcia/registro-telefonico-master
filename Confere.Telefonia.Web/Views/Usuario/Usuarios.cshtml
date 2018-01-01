@@ -1,0 +1,132 @@
+﻿@model IList<Confere.Telefonia.Web.Negocio.Usuario>
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Usuários
+        <small>Tabela dos usuários registrados no sistema.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Cadastro</a></li>
+        <li class="active">Usuários</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+
+                <div class="box-header">
+                    <div id="boxBtnImprimir" class="pull-left box-tools">
+                        @Html.Partial("_BotoesImpressao")
+                    </div>
+                    <div id="boxBtnCadastro" class="pull-right box-tools">
+                        @Html.Partial("_BotoesDT")
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive">
+                    <table id="tblDados" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Login</th>
+                                <th>Email</th>
+                                <th>Último Login</th>
+                                <th>Papéis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var usuario in Model)
+                            {
+                                <tr data-usuario-id="@usuario.Id">
+                                    <td class="usuario-nome">@usuario.Nome</td>
+                                    <td class="usuario-login">@usuario.Login</td>
+                                    <td class="usuario-email">@usuario.Email</td>
+                                    <td class="usuario-ultimo-login">
+                                        @if (usuario.UltimoLogin.HasValue)
+                                        {
+                                            @Html.Raw(usuario.UltimoLogin);
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("N/D");
+                                        }
+                                    </td>
+                                    <td class="usuario-papeis">
+                                        @usuario.TextoPapeis
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+
+</section><!-- /.content -->
+
+@section Modais {
+    @Html.Partial("_ModalAlteracao")
+    @Html.Partial("_ModalExclusao")
+    @Html.Partial("_ModalInclusao")
+}
+
+@section Scripts {
+    @Html.Partial("_DataTable")
+
+    <script type="text/javascript">
+
+        function usuarioSelecionado() {
+            //recuperar os atributos do usuário na linha selecionada
+            var tr = $("#tblDados tr.DTTT_selected");
+            return {
+                "id": $(tr).data('usuario-id'),
+                "nome": $('td.usuario-nome', tr).text(),
+                "login": $('td.usuario-login', tr).text(),
+                "email": $('td.usuario-email', tr).text(),
+                "papeis": $('td.usuario-papeis', tr).text().split(',')
+            }
+        }
+
+        //disparada quando modalExcluir estiver prestes a ser mostrada
+        $('#modalExcluir').on('show.bs.modal', function (e) {
+            
+            var usuario = usuarioSelecionado();
+            
+            //popular os campos do formulário
+            $(e.currentTarget).find('input[name="id"]').val(usuario.id);
+            $(e.currentTarget).find('#nome').text(usuario.nome);
+        });
+
+        //disparada quando modalAlterar estiver prestes a ser mostrada
+        $("#modalAlterar").on('show.bs.modal', function (e) {
+            var usuario = usuarioSelecionado();
+
+            //popular os campos do formulário
+            $(e.currentTarget).find('input[name="id"]').val(usuario.id);
+            $(e.currentTarget).find('input[name="nome"]').val(usuario.nome);
+            $(e.currentTarget).find('input[name="login"]').val(usuario.login);
+            $(e.currentTarget).find('input[name="email"]').val(usuario.email);
+
+            $(e.currentTarget).find('option').removeAttr('selected');
+
+            usuario.papeis.forEach(function (value) {
+                $(e.currentTarget).find('option[value="' + value.trim() + '"]').attr('selected', true);
+            });
+        });
+
+        $(".cadastro-menu").addClass('active');
+        $(".cadastro-menu ul li:nth-child(5)").addClass('active');
+    </script>
+    
+}

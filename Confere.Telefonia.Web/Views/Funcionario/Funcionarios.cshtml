@@ -1,0 +1,118 @@
+﻿@model IList<Confere.Telefonia.Web.Models.FuncionarioViewModel>
+@{
+    ViewBag.Title = "Funcionarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Funcionários
+        <small>Tabela dos funcionários registrados no sistema.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Cadastro</a></li>
+        <li class="active">Funcionários</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+
+                <div class="box-header">
+                    <div id="boxBtnImprimir" class="pull-left box-tools">
+                        @Html.Partial("_BotoesImpressao")
+                    </div>
+                    <div id="boxBtnCadastro" class="pull-right box-tools">
+                        @Html.Partial("_BotoesDT")
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive">
+                    <table id="tblDados" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Setor</th>
+                                <th>Qtde Ligações <small>(@DateTime.Now.Year)</small></th>
+                                <th>Qtde Ligações Particulares<small>(@DateTime.Now.Year)</small></th>
+                                <th>Destino Favorito</th>
+                                <th>Telefone Favorito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var func in Model)
+                            {
+                                <tr data-funcionario-id="@func.Id">
+                                    <td class="funcionario-nome">@func.Nome</td>
+                                    <td class="funcionario-setorId" data-setor-id="@func.SetorId">@func.Setor</td>
+                                    <td>@func.QtdeLigacoes</td>
+                                    <td>@func.QtdeLigacoesParticulares</td>
+                                    <td class="funcionario-destinoId" data-destino-id="@func.DestinoFavoritoId">@func.Destino</td>
+                                    <td class="funcionario-telefone">@func.TelefoneFavorito</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+
+</section><!-- /.content -->
+
+@section Modais {
+    @Html.Partial("_ModalAlteracao")
+    @Html.Partial("_ModalExclusao")
+    @Html.Partial("_ModalInclusao")
+}
+
+@section Scripts {
+    @Html.Partial("_DataTable")
+    <script type="text/javascript">
+
+        function objetoSelecionado() {
+            //recuperar os atributos do destino na linha selecionada
+            var tr = $("#tblDados tr.DTTT_selected");
+            return {
+                "id": $(tr).data('funcionario-id'),
+                "nome": $('td.funcionario-nome', tr).text(),
+                "telefone": $('td.funcionario-telefone', tr).text(),
+                "setorId": $('td.funcionario-setorId', tr).data('setor-id'),
+                "destinoId": $('td.funcionario-destinoId', tr).data('destino-id'),
+            }
+        }
+
+        //disparada quando modalExcluir estiver prestes a ser mostrada
+        $('#modalExcluir').on('show.bs.modal', function (e) {
+            var objeto = objetoSelecionado();
+
+            //popular os campos do formulário
+            $(e.currentTarget).find('input[name="id"]').val(objeto.id);
+            $(e.currentTarget).find('#nome').text(objeto.nome);
+        });
+
+        //disparada quando modalAlterar estiver prestes a ser mostrada
+        $("#modalAlterar").on('show.bs.modal', function (e) {
+            var objeto = objetoSelecionado();
+
+            //popular os campos do formulário
+            $(e.currentTarget).find('input[name="id"]').val(objeto.id);
+            $(e.currentTarget).find('input[name="nome"]').val(objeto.nome);
+            $(e.currentTarget).find('select[name="setorId"]').val(objeto.setorId);
+            $(e.currentTarget).find('select[name="destinoFavoritoId"]').val(objeto.destinoId);
+            $(e.currentTarget).find('input[name="telefoneFavorito"]').val(objeto.telefone);
+
+        });
+
+        $(".cadastro-menu").addClass('active');
+        $(".cadastro-menu ul li:nth-child(2)").addClass('active');
+
+    </script>
+}
+

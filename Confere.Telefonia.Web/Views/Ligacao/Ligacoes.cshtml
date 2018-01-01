@@ -1,0 +1,100 @@
+﻿@model IList<Confere.Telefonia.Web.Models.LigacaoViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Ligações
+        <small>Registro telefônico de @ViewBag.DescricaoFiltro.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Registro de Ligações</a></li>
+        <li class="active">Lista</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+
+                <div class="box-header">
+                    <div class="pull-left box-tools">
+                        <a class="btn btn-default" href="/ligacoes/ultimos-7-dias">Últimos 7 dias</a>
+                        <a class="btn btn-default" href="/ligacoes/ultimos-30-dias">Últimos 30 dias</a>
+                        <a class="btn btn-default" href="/ligacoes/neste-ano">Ligações de @DateTime.Now.Year</a>
+                        <a class="btn btn-default" href="/ligacoes">Todas</a>
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive">
+                    <table id="tblDados" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Funcionário</th>
+                                <th>Destino</th>
+                                <th>Nº Telefone</th>
+                                <th>Data</th>
+                                <th>Duração (min)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ligacao in Model)
+                            {
+                                <tr>
+                                    <td>@ligacao.FuncionarioNome</td>
+                                    <td>@ligacao.DestinoNome</td>
+                                    <td>@ligacao.Telefone</td>
+                                    <td>@ligacao.DataHora</td>
+                                    <td>@ligacao.Duracao.TotalMinutes</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+
+</section><!-- /.content -->
+
+@section Scripts {
+<script type="text/javascript">
+    $(function() {
+        $('#tblDados').dataTable({
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": true,
+            "aaSorting": [[3, "desc"]],
+            "oLanguage": {
+                "sProcessing":   "A processar...",
+                "sLengthMenu":   "Mostrar _MENU_ registros",
+                "sZeroRecords":  "Não foram encontrados resultados",
+                "sInfo":         "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty":    "Mostrando 0 até 0 de 0 registros.",
+                "sInfoFiltered": "(filtrado de _MAX_ registos no total)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Pesquisar:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Prim",
+                    "sPrevious": "Ant",
+                    "sNext":     "Prox",
+                    "sLast":     "Últ"
+                }
+            }
+        });
+
+        $(".registro-menu").addClass('active');
+        $(".registro-menu ul li:nth-child(2)").addClass('active');
+    });
+</script>
+}

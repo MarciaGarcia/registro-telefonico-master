@@ -1,0 +1,194 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Painel de Controle
+        <small>Gráficos comparativos</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Painel de Controle</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>
+                        150
+                    </h3>
+                    <p>
+                        Novas Ligações
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-android-call"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Mais info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>
+                        1:23 min
+                    </h3>
+                    <p>
+                        Duração Média
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-clock"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Mais info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>
+                        44
+                    </h3>
+                    <p>
+                        Destinos únicos
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-location"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Mais info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div><!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>
+                        65
+                    </h3>
+                    <p>
+                        Setores
+                    </p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    Mais info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div><!-- ./col -->
+    </div><!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-6">
+            <!-- Box (with bar chart) -->
+            <div class="box box-success" id="loading-example">
+                <div class="box-header">
+                    <i class="fa fa-phone"></i>
+                    <h3 class="box-title">Ligações em 2017</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <!-- bar chart -->
+                            <div class="chart" id="bar-chart" style="height: 250px;"></div>
+                        </div>
+
+                        <div class="col-sm-12 table-responsive">
+                            <!-- .table - Uses sparkline charts-->
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Setor</th>
+                                    <th>Ligações</th>
+                                    <th>Duração Média</th>
+                                    <th>Funcionários</th>
+                                </tr>
+                                <tr>
+                                    <td>Recursos Humanos - Rh</td>
+                                    <td>432</td>
+                                    <td>209</td>
+                                    <td>239</td>
+                                </tr>
+                                <tr>
+                                    <td>Procuradoria Geral - Pg</td>
+                                    <td>2342</td>
+                                    <td>131</td>
+                                    <td>958</td>
+                                </tr>
+                                <tr>
+                                    <td>Acessória Técnica - Contratos</td>
+                                    <td>434</td>
+                                    <td>19</td>
+                                    <td>417</td>
+                                </tr>
+                                <tr>
+                                    <td>Gabinete da Presidência</td>
+                                    <td>433</td>
+                                    <td>109</td>
+                                    <td>476</td>
+                                </tr>
+                            </table><!-- /.table -->
+                        </div>
+
+                    </div><!-- /.row - inside box -->
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <button class="btn btn-info"><i class="fa fa-download"></i> Gerar PDF</button>
+                    <button class="btn btn-info"><i class="fa fa-file-text"></i> Relatórios</button>
+                </div><!-- /.box-footer -->
+            </div><!-- /.box -->
+
+
+
+        </section><!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-6">
+            <!-- Map box -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <i class="fa fa-clock-o"></i>
+                    <h3 class="box-title">
+                        Duração Média x Ligações
+                    </h3>
+                </div>
+                <div class="box-body no-padding">
+                    <div class="chart" id="duration-chart" style="height: 400px;"></div>
+                </div><!-- /.box-body-->
+                <div class="box-footer">
+                    <button class="btn btn-info"><i class="fa fa-download"></i> Generate PDF</button>
+                    <button class="btn btn-warning"><i class="fa fa-bug"></i> Report Bug</button>
+                </div>
+            </div>
+            <!-- /.box -->
+
+        </section><!-- right col -->
+    </div><!-- /.row (main row) -->
+
+</section><!-- /.content -->
+
+@section Scripts {
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/Content/js/AdminLTE/dashboard.js" type="text/javascript"></script>
+}
+

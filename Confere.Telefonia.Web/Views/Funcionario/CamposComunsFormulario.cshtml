@@ -1,0 +1,42 @@
+﻿<div class="form-group row">
+    <label for="inputNome" class="col-sm-2 col-form-label">Nome:</label>
+    <div class="col-sm-10">
+        <input class="form-control" id="inputNome" placeholder="Nome" name="nome" required />
+    </div>
+</div>
+<!-- setor -->
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Setor:</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="setorId">
+            @foreach (var setor in ViewBag.Setores)
+            {
+                <option value="@setor.Id">@setor.Nome</option>
+            }
+        </select>
+    </div>
+</div>
+<!-- destino favorito -->
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Destino Favorito:</label>
+    <div class="col-sm-10">
+        <select class="form-control" name="destinoFavoritoId">
+            @foreach (var destino in ViewBag.Destinos)
+            {
+                <option value="@destino.Id">@destino.Nome</option>
+            }
+        </select>
+    </div>
+</div>
+<!-- telefone favorito -->
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Telefone Favorito:</label>
+    <div class="col-sm-10">
+        <div class="input-group">
+            <div class="input-group-addon">
+                <i class="fa fa-phone"></i>
+            </div>
+            <input type="text" class="form-control" name="telefoneFavorito" data-inputmask='"mask": "(99) 99999-9999"' data-mask />
+        </div>
+    </div><!-- /.input group -->
+</div><!-- /.form group -->

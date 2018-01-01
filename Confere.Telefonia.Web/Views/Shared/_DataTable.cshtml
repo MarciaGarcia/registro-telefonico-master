@@ -1,0 +1,47 @@
+﻿<script src="~/Content/js/plugins/datatables/dataTables.TableTools.js" type="text/javascript"></script>
+<script src="~/Content/js/plugins/datatables/ZeroClipboard.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        var dt = $('#tblDados').dataTable({
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": true,
+            "bSelect": false,
+            "oLanguage": {
+                "sProcessing":   "A processar...",
+                "sLengthMenu":   "Mostrar _MENU_ registros",
+                "sZeroRecords":  "Não foram encontrados resultados",
+                "sInfo":         "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty":    "Mostrando 0 até 0 de 0 registros.",
+                "sInfoFiltered": "(filtrado de _MAX_ registos no total)",
+                "sInfoPostFix":  "",
+                "sSearch":       "Pesquisar:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "Prim",
+                    "sPrevious": "Ant",
+                    "sNext":     "Prox",
+                    "sLast":     "Últ"
+                }
+            }
+        });
+        var tt = new TableTools(
+            dt,
+            {
+                sRowSelect: "single",
+                fnRowSelected: function (nodes, selected) {
+                    //var usuarioId = $(nodes[0]).attr('data-usuario-id');
+                    //console.log('id do usuário: ' + usuarioId);
+                    $('#btnAlterar').toggleClass('disabled', false);
+                    $('#btnExcluir').toggleClass('disabled', false);
+                },
+                fnRowDeselected: function () {
+                    $('#btnAlterar').toggleClass('disabled', true);
+                    $('#btnExcluir').toggleClass('disabled', true);
+                }
+            });
+    });
+</script>

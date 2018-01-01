@@ -1,0 +1,197 @@
+﻿@model Confere.Telefonia.Web.Models.LigacaoViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Nova Ligação
+        <small>Cadastre sua ligação no formulário abaixo</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Registro de Ligações</a></li>
+        <li class="active">Nova Ligação</li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- form start -->
+    <form role="form" action="/Ligacao/Incluir" method="post">
+
+        @Html.AntiForgeryToken()
+
+        <!-- general form elements -->
+        <div class="box box-primary">
+
+            <div class="box-body row">
+
+                <!-- left column -->
+                <div class="col-md-6">
+
+                    <!-- funcionário -->
+                    <div class="form-group">
+                        <label>Funcionário:</label>
+                        <input id="inputFuncionarioId" type="hidden" name="FuncionarioId" value="@Model.FuncionarioId" />
+                        <input id="inputFuncionario" name="FuncionarioNome" autofocus autocomplete="off" type="text" class="form-control input-lg" placeholder="Digite o funcionário para localizar..." value="@Model.FuncionarioNome" />
+                        @Html.ValidationMessage("FuncionarioNome", new { @class = "text-red" })
+                    </div>
+
+                    <!-- destino -->
+                    <div class="form-group">
+                        <label>Destino:</label>
+                        @Html.DropDownListFor(l => l.DestinoId, new SelectList(ViewBag.Destinos, "Id", "Nome"), new { @class = "form-control"})
+                        @Html.ValidationMessage("DestinoNome", new { @class = "text-red" })
+                    </div>
+
+                    <!-- telefone -->
+                    <div class="form-group">
+                        <label>Telefone:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <input name="Telefone" type="text" class="form-control" data-inputmask='"mask": "(99) 99999-9999"' data-mask value="@Model.Telefone" />
+                        </div><!-- /.input group -->
+                        @Html.ValidationMessage("Telefone", new { @class = "text-red" })
+                    </div><!-- /.form group -->
+
+                    <!-- data da ligação -->
+                    <div class="form-group">
+                        <label>Data:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input id="DataHora" name="DataHora" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="@Model.DataHora" />
+                            @Html.ValidationMessage("DataHora", new { @class = "text-red" })
+                        </div><!-- /.input group -->
+                    </div><!-- /.form-group -->
+
+                    <div class="row">
+                        <!-- hora inicial -->
+                        <div class="bootstrap-timepicker col-md-6">
+                            <div class="form-group">
+                                <label>Hora Inicial:</label>
+                                <div class="input-group">
+                                    <input id="HoraInicial" name="HoraInicial" type="text" class="form-control" data-inputmask="'mask': '99:99'" data-mask value="@string.Format("{0:00}:{1:00}", Model.HoraInicial.Hour, Model.HoraInicial.Minute)" />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                    @Html.ValidationMessage("HoraInicial", new { @class = "text-red" })
+                                </div><!-- /.input group -->
+                            </div><!-- /.form group -->
+                        </div>
+
+                        <!-- hora final -->
+                        <div class="bootstrap-timepicker col-md-6">
+                            <div class="form-group">
+                                <label>Hora Final:</label>
+                                <div class="input-group">
+                                    <input name="HoraFinal" type="text" class="form-control" value="@string.Format("{0:00}:{1:00}", Model.HoraFinal.Hour, Model.HoraFinal.Minute)" data-inputmask="'mask': '99:99'" data-mask />
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                    @Html.ValidationMessage("HoraFinal", new { @class = "text-red" })
+                                </div><!-- /.input group -->
+                            </div><!-- /.form group -->
+                        </div>
+                    </div>
+
+
+                </div><!--/.col left -->
+                <!-- right column -->
+                <div class="col-md-6">
+
+                    <!-- contato -->
+                    <div class="form-group">
+                        <label>Contato:</label>
+                        <input name="Contato" type="text" class="form-control" placeholder="Nome do contato..." value="@Model.Contato" />
+                        @Html.ValidationMessage("Contato")
+                    </div>
+
+                    <!-- telefonista -->
+                    <div class="form-group">
+                        <label>Telefonista:</label>
+                        @Html.DropDownListFor(l => l.TelefonistaId, new SelectList(ViewBag.Telefonistas, "Id", "Nome"), new { @class = "form-control" })
+                        @Html.ValidationMessage("TelefonistaNome", new { @class = "text-red" })
+                    </div>
+
+                    <!-- observação -->
+                    <div class="form-group">
+                        <label>Observações:</label>
+                        <textarea name="Observacao" class="form-control" rows="6" placeholder="Digite suas observações ...">@Model.Observacao</textarea>
+                        @Html.ValidationMessage("Observacao", new { @class = "text-red" })
+                    </div>
+
+                    <!-- particular -->
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                @Html.CheckBoxFor(l => l.Particular)
+                                Essa ligação é <strong>particular</strong>.
+                            </label>
+                            @Html.ValidationMessage("Particular", new { @class = "text-red" })
+                        </div>
+                    </div>
+
+
+                </div><!--/.col right -->
+
+
+            </div><!-- /.box-body -->
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </div>
+
+        </div><!-- /.box -->
+
+    </form>
+
+</section><!-- /.content -->
+
+@section Scripts {
+<!--typeahead plugin-->
+<script src="~/Content/js/plugins/bootstrap3-typeahead/bootstrap3-typeahead.js" type="text/javascript"></script>
+<!-- InputMask -->
+<script src="~/Content/js/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
+<script src="~/Content/js/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
+<script src="~/Content/js/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
+<!-- bootstrap time picker -->
+<script src="~/Content/js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        $("[data-mask]").inputmask();
+        //$("#DataHora").val(new Date());
+
+        //Timepicker
+        //$(".timepicker").timepicker({
+        //    showInputs: false
+        //});
+
+        $("#inputFuncionario").typeahead({
+            source: [
+            @foreach (var funcionario in ViewBag.Funcionarios)
+            {
+                @Html.Raw("{ id: '" + funcionario.Id + "', name: '" + funcionario.Nome + "' }, ")
+            }
+            ],
+            autoSelect: true,
+            afterSelect: function (current) {
+                console.log("Funcionário selecionado: " + current.id);
+                $("#inputFuncionarioId").val(current.id);
+            }
+        });
+
+        $(".registro-menu").addClass('active');
+        $(".registro-menu ul li:nth-child(1)").addClass('active');
+
+    });
+</script>
+
+}

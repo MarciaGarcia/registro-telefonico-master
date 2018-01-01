@@ -1,0 +1,112 @@
+﻿@model IList<Confere.Telefonia.Web.Models.SetorViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Setores
+        <small>Tabela dos setores registrados no Confere.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="index.html"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Cadastro</a></li>
+        <li class="active">Setores</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+
+                <div class="box-header">
+                    <div id="boxBtnImprimir" class="pull-left box-tools">
+                        @Html.Partial("_BotoesImpressao")
+                    </div>
+                    <div id="boxBtnCadastro" class="pull-right box-tools">
+                        @Html.Partial("_BotoesDT")
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive">
+                    <table id="tblDados" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Sigla</th>
+                                <th>Nº Funcionários</th>
+                                <th>Qtde Ligações <small>(@DateTime.Now.Year)</small></th>
+                                <th>Qtde Ligações Particulares <small>(@DateTime.Now.Year)</small></th>
+                                <th>Duração Média <small>(Ligações em @DateTime.Now.Year)</small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var setor in Model)
+                            {
+                                <tr data-setor-id="@setor.Id">
+                                    <td class="setor-nome">@setor.Nome</td>
+                                    <td class="setor-sigla">@setor.Sigla</td>
+                                    <td>@setor.NumeroFuncionarios</td>
+                                    <td>@setor.QtdeLigacoes</td>
+                                    <td>@setor.QtdeLigacoesParticulares</td>
+                                    <td>@setor.DuracaoMedia</td>
+                                </tr>
+                            }
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+
+</section><!-- /.content -->
+
+@section Modais {
+    @Html.Partial("_ModalAlteracao")
+    @Html.Partial("_ModalExclusao")
+    @Html.Partial("_ModalInclusao")
+}
+
+@section Scripts {
+    @Html.Partial("_DataTable")
+
+    <script type="text/javascript">
+
+        function objetoSelecionado() {
+            //recuperar os atributos do setor na linha selecionada
+            var tr = $("#tblDados tr.DTTT_selected");
+            return {
+                "id": $(tr).data('setor-id'),
+                "nome": $('td.setor-nome', tr).text(),
+                "sigla": $('td.setor-sigla', tr).text(),
+            }
+        }
+
+        //disparada quando modalExcluir estiver prestes a ser mostrada
+        $('#modalExcluir').on('show.bs.modal', function (e) {
+            var objeto = objetoSelecionado();
+
+            //popular os campos do modal
+            $(e.currentTarget).find('input[name="id"]').val(objeto.id);
+            $(e.currentTarget).find('#nome').text(objeto.nome);
+        });
+
+        //disparada quando modalAlterar estiver prestes a ser mostrada
+        $("#modalAlterar").on('show.bs.modal', function (e) {
+            var objeto = objetoSelecionado();
+
+            //popular os campos do formulário
+            $(e.currentTarget).find('input[name="id"]').val(objeto.id);
+            $(e.currentTarget).find('#inputNome').text(objeto.nome);
+            $(e.currentTarget).find('#inputSigla').text(objeto.sigla);
+        });
+
+        $(".cadastro-menu").addClass('active');
+        $(".cadastro-menu ul li:nth-child(1)").addClass('active');
+
+    </script>
+
+}
