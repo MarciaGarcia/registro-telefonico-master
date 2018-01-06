@@ -787,6 +787,7 @@
     <Content Include="Views\Shared\_DataTable.cshtml" />
     <Content Include="Views\Shared\_BotoesDT.cshtml" />
     <Content Include="Views\Usuario\CamposComunsFormulario.cshtml" />
+    <Content Include="ClassDiagram.cd" />
     <None Include="packages.config" />
     <Content Include="Views\Destino\CamposComunsFormulario.cshtml" />
     <Content Include="Views\Telefonista\CamposComunsFormulario.cshtml" />

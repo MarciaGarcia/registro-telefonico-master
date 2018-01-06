@@ -63,7 +63,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var textoPuro = "Marcia Garcia";
+            var textoPuro = "Daniel Portugal";
             var senha = new Senha(new SHA1Managed()) { Valor = textoPuro };
             Console.WriteLine($"Senha em texto puro: {senha.Valor}");
             var hash = senha.GeraValorHash(textoPuro);

@@ -22,7 +22,6 @@ namespace Confere.Telefonia.Web
             using (var contexto = new TelefoniaContexto())
             {
                 contexto.Database.Migrate();
-                // retirar quando for rodar em outro servidor .....
                 //var usu = contexto.Usuarios.FirstOrDefault(u => u.Login == "admin");
                 //if (usu != null)
                 //{
@@ -37,7 +36,6 @@ namespace Confere.Telefonia.Web
                 //};
                 //contexto.Usuarios.Add(usu);
                 //contexto.SaveChanges();
-
             }
         }
 
